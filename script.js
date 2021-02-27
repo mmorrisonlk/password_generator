@@ -17,27 +17,32 @@ function writePassword() {
     var passwordLength = parseInt(window.prompt("Enter a number between 8 and 128 to determine password length:"), 10);
 
     if (Number.isInteger(passwordLength) == false) {
-        window.alert("Please enter an integer value for Password Length");
+        window.alert("Please enter an integer value for password length");
         return;
     }
 
     if (passwordLength<8 || passwordLength>128) {
-        window.alert("Invalid Password Length");
+        window.alert("Invalid password length");
         return;
     }
 
-    var userLower = window.prompt("Do you need a password that includes at least one Lower case leter?");
+    var userLower = window.prompt("Do you need a password that includes at least one lower case character? Respond Y or N");
 
-    var userUpper = window.prompt("Do you need a password that includes at least one Upper case leter?");
+    var userUpper = window.prompt("Do you need a password that includes at least one upper case character? Respond Y or N");
 
-    var userNumeric = window.prompt("Do you need a password that includes at least one Numeric Character?");
+    var userNumeric = window.prompt("Do you need a password that includes at least one numeric character? Respond Y or N");
     
-    var userSpecial = window.prompt("Do you need a password that includes at least one Special Character?");
+    var userSpecial = window.prompt("Do you need a password that includes at least one special character? Respond Y or N");
 
     var passwordLower = userLower.includes("y");
     var passwordUpper = userUpper.includes("y");
     var passwordNumeric = userNumeric.includes("y");
     var passwordSpecial = userSpecial.includes("y");
+
+    if (passwordLower === false && passwordUpper === false && passwordNumeric === false && passwordSpecial === false) {
+        window.alert("No valid characters to create a password with please select 1 or more character types")
+        return;
+    }
 
     var passwordText = document.querySelector("#password");
 
@@ -51,23 +56,55 @@ function writePassword() {
     function buildPassword(){
         if (globalCount < passwordLength) {
             globalCount++
-            if ((globalCount % 4) === 0 && passwordSpecial === true){
-                addingSymbol();
-            }
-            else if ((globalCount % 3) === 0 && passwordUpper === true){
+                if (passwordLower === false && passwordNumeric === true){
+                    if ((globalCount % 3) === 0 && passwordSpecial === true){
+                        addingSpecial();
+                    }
+                    else if ((globalCount % 2) === 0 && passwordUpper === true){
+                        addingUppercase();
+                    }
+                    else {
+                        addingNumeric();
+                    }
+                }
+                else if (passwordLower === false && passwordSpecial === true) {
+                    if ((globalCount % 3) === 0 && passwordUpper === true){
+                        addingUppercase();
+                    }
+                    else if ((globalCount % 2) === 0 && passwordNumeric === true){
+                        addingNumeric();
+                    }
+                    else {
+                        addingSpecial();
+                    }
+                }
+                else if (passwordLower === false && passwordUpper === true) {
+                    if ((globalCount % 3) === 0 && passwordSpecial === true){
+                        addingSpecial();
+                    }
+                    else if ((globalCount % 2) === 0 && passwordNumeric === true){
+                        addingNumeric();
+                    }
+                    else {
+                        addingUppercase();
+                    }
+                }
+                else if ((globalCount % 4) === 0 && passwordSpecial === true){
+                addingSpecial();
+                }
+                else if ((globalCount % 3) === 0 && passwordUpper === true){
                 addingUppercase();
-            }
-            else if ((globalCount % 2) === 0 && passwordNumeric === true){
-                addingNumber();
-            }
-            else {
+                }
+                else if ((globalCount % 2) === 0 && passwordNumeric === true){
+                addingNumeric();
+                }
+                else {
                 addingLowercase();
-            }
+                }
         }
         else {
             console.log(passwordFinal)
             passwordText.value = passwordFinal;
-            // passwordText = "";
             passwordFinal = "";
         }
     }
@@ -82,22 +119,17 @@ function writePassword() {
         buildPassword();
     }
     
-    function addingNumber() {
+    function addingNumeric() {
         passwordFinal += number[Math.floor(Math.random() * number.length)];
         buildPassword();
     }
 
-    function addingSymbol() {
+    function addingSpecial() {
         passwordFinal += symbol[Math.floor(Math.random() * symbol.length)];
         buildPassword();
     }
 
     buildPassword();
-
-
-    // var password = generatePassword();
-
-
 }
 
 // Add event listener to generate button
