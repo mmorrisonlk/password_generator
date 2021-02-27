@@ -34,10 +34,10 @@ function writePassword() {
     
     var userSpecial = window.prompt("Do you need a password that includes at least one special character? Respond Y or N");
 
-    var passwordLower = userLower.includes("y");
-    var passwordUpper = userUpper.includes("y");
-    var passwordNumeric = userNumeric.includes("y");
-    var passwordSpecial = userSpecial.includes("y");
+    var passwordLower = userLower.includes("y" || "Y");
+    var passwordUpper = userUpper.includes("y" || "Y");
+    var passwordNumeric = userNumeric.includes("y" || "Y");
+    var passwordSpecial = userSpecial.includes("y" || "Y");
 
     if (passwordLower === false && passwordUpper === false && passwordNumeric === false && passwordSpecial === false) {
         window.alert("No valid characters to create a password with please select 1 or more character types")
