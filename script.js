@@ -15,7 +15,17 @@ var passwordFinal = "";
 function writePassword() {
     // This piece of code prompts the user to enter a value for how long of a password they want to generate. It then does 2 sanity checks to test if the number converts to an integer so the can't enter things like "eight" to potentially confuse it let alone nonsense answers and if the number supplied is within the bounds of 8 to 128.
     var passwordLength = parseInt(window.prompt("Enter a number between 8 and 128 to determine password length:"), 10);
-    // The goal of the following code is to establish the set of characters that the program can use to randomly generate the password from. One fun thing that I remembered is I had to use \ to except the standard usage of ", ', and \ so they didn't break the symbol string.
+
+    if (Number.isInteger(passwordLength) == false) {
+        window.alert("Please enter an integer value for Password Length");
+        return;
+    }
+
+    if (passwordLength<8 || passwordLength>128) {
+        window.alert("Invalid Password Length");
+        return;
+    }
+
     var userLower = window.prompt("Do you need a password that includes at least one Lower case leter?");
 
     var userUpper = window.prompt("Do you need a password that includes at least one Upper case leter?");
@@ -29,32 +39,35 @@ function writePassword() {
     var passwordNumeric = userNumeric.includes("y");
     var passwordSpecial = userSpecial.includes("y");
 
+    var passwordText = document.querySelector("#password");
+
     var globalCount = 0;
+    // The goal of the following code is to establish the set of characters that the program can use to randomly generate the password from. One fun thing that I remembered is I had to use \ to except the standard usage of ", ', and \ so they didn't break the symbol string.
     const lowercase = 'abcdefghijklmnopqrstuvwxyz';
     const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const number = '0123456789';
     const symbol = " !\"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~";
-    
-    if (Number.isInteger(passwordLength) == false) {
-        window.alert("Please enter an integer value for Password Length");
-        return;
-    }
-
-    if (passwordLength<8 || passwordLength>128) {
-        window.alert("Invalid Password Length");
-        return;
-    }
 
     function buildPassword(){
         if (globalCount < passwordLength) {
             globalCount++
-            // addingLowercase();
-            // addingUppercase();
-            // addingNumber();
-            // addingSymbol();
+            if ((globalCount % 4) === 0 && passwordSpecial === true){
+                addingSymbol();
+            }
+            else if ((globalCount % 3) === 0 && passwordUpper === true){
+                addingUppercase();
+            }
+            else if ((globalCount % 2) === 0 && passwordNumeric === true){
+                addingNumber();
+            }
+            else {
+                addingLowercase();
+            }
         }
         else {
             console.log(passwordFinal)
+            passwordText.value = passwordFinal;
+            // passwordText = "";
             passwordFinal = "";
         }
     }
@@ -81,12 +94,9 @@ function writePassword() {
 
     buildPassword();
 
-    // console.log(passwordLength);
 
     // var password = generatePassword();
-    // var passwordText = document.querySelector("#password");
 
-    // passwordText.value = password;
 
 }
 
