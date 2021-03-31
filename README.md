@@ -2,7 +2,7 @@
 
 https://mmorrisonlk.github.io/password_generator/
 
-![Deployed Site](https://github.com/mmorrisonlk/smu_code_quiz/blob/main/assets/passwordGenerator.png?raw=true "Deployed to the Web")
+![Deployed Site](https://github.com/mmorrisonlk/password_generator/blob/main/assets/passwordGenerator.png?raw=true "Deployed to the Web")
 
 So my first thought is to get the prompts working. So my point of attack is going to involve establishing variables to store the user's choices in regards to their password requirements. Then I need to make the app able to use this information in a useful way.
 
