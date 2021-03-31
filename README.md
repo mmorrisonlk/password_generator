@@ -1,6 +1,6 @@
-# smu_password_gen
+# password_generator
 
-https://mmorrisonlk.github.io/smu_password_gen/
+https://mmorrisonlk.github.io/password_generator/
 
 So my first thought is to get the prompts working. So my point of attack is going to involve establishing variables to store the user's choices in regards to their password requirements. Then I need to make the app able to use this information in a useful way.
 
